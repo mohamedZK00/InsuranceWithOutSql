@@ -52,7 +52,6 @@ class OutputModel(BaseModel):
 # الدالة الرئيسية لإرجاع صفحة HTML
 @app.get("/", response_class=HTMLResponse)
 def read_root():
-    """Return the main HTML file."""
     return FileResponse("index.html")
 
 # دالة التنبؤ
@@ -60,5 +59,5 @@ def read_root():
 def predict(data: InputModel):
     data_df = pd.DataFrame([data.dict()])
     predictions = predict_model(model, data=data_df)
-    return OutputModel(prediction=round(predictions["prediction"].iloc[0], 2))
+    return OutputModel(prediction= round(predictions['prediction_label'].iloc[0], 2))
 
