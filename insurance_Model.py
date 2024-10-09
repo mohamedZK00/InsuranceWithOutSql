@@ -1,5 +1,4 @@
-
-
+import os
 import pandas as pd
 from pycaret.regression import load_model, predict_model
 from fastapi import FastAPI
@@ -13,10 +12,24 @@ from fastapi.staticfiles import StaticFiles
 # إنشاء التطبيق
 app = FastAPI()
 
+model_dir = os.path.dirname(os.path.realpath(__file__))  # المسار إلى الدليل الحالي
+model_path = os.path.join(model_dir, '1-Insurance_model')  # إضافة اسم النموذج
 
+# طباعة المسار للتحقق
+print(f"Loading model from: {model_path}")
 
-# تحميل نموذج التدريبات
-model = load_model("insurance_Model")
+try:
+    # استخدام load_model من pycaret
+    model = load_model(model_path)
+except Exception as e:
+    print(f"Failed to load model with pycaret: {e}")
+    try:
+        # محاولة استخدام joblib مباشرة لتحميل النموذج
+        model = joblib.load(model_path)
+        print("Model loaded successfully with joblib.")
+    except Exception as e:
+        print(f"Failed to load model with joblib: {e}")
+        raise e  # رفع الاستثناء إذا لم يتم التحميل
 
 
 app.add_middleware(
@@ -58,7 +71,7 @@ def predict(data: InputModel):
     
     data_df = pd.DataFrame([data.dict()])  # تحويل الإدخال إلى DataFrame
     predictions = predict_model(model, data=data_df)
-    return OutputModel(prediction=predictions["prediction_label"].iloc[0])  # إرجاع OutputModel
+    return OutputModel(prediction=round(predictions["prediction_label"].iloc[0], 2))  # إرجاع OutputModel
 
     
     
