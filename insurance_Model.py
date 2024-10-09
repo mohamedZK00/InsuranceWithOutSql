@@ -7,6 +7,8 @@ from pydantic import BaseModel  # تغيير إلى BaseModel لنماذج ال�
 from fastapi import FastAPI, Response
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
+import joblib
+
 
 
 # إنشاء التطبيق
