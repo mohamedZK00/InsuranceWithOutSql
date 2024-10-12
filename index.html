@@ -7,30 +7,21 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            background-image: url('https://img.freepik.com/free-vector/insurance-services-concept-abstract-3d-sphere-globe-with-icons-hand_127544-1099.jpg?t=st=1728754216~exp=1728757816~hmac=4b916898a5fbc3518d318d3e1ecf4b2573d51f064b4a55c2d9aff3750b9db392&w=1380');
+            background-image: url('https://img.freepik.com/free-photo/flat-lay-business-items-with-growth-chart-medical-masks_23-2148780557.jpg?t=st=1728755668~exp=1728759268~hmac=7874bdca1535c5efeb14c6f07d61650fa9fb6d158e33da0d2fb6131fd691cca5&w=1380');
             background-size: cover;
             background-position: center;
             color: #fff;
-            height: 100vh; /* لجعل الخلفية تغطي الشاشة بالكامل */
-            display: flex;
-            align-items: flex-start; /* لجعل المحتويات تبدأ من الأعلى */
-            justify-content: flex-end; /* لجعل البطاقة والعنوان في أقصى اليمين */
-            padding-right: 20px; /* لإضافة مسافة بين البطاقة وحافة الشاشة */
-            padding-top: 50px; /* لإضافة مسافة من الأعلى */
         }
         .card {
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             background-color: rgba(190, 204, 204, 0.708); /* خلفية بيضاء شبه شفافة */
             width: 33%; /* جعل عرض البطاقة ثلث عرض الحاوية */
-            float: right; /* لنقل البطاقة إلى اليمين */
+            margin: auto; /* مركز البطاقة */
         }
         h1 {
-            color: #ffffff;
+            color: #131212;
             font-size: 2.5rem; /* حجم أكبر للعنوان */
-            text-align: right; /* جعل النص يظهر على اليمين */
-            margin-bottom: 10px; /* مسافة أسفل العنوان لفصله عن البطاقة */
-            width: 100%; /* لجعل العنوان يأخذ عرض كامل */
         }
         h3 {
             color: #023530;
@@ -55,8 +46,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Insurance Cost Prediction</h1> <!-- العنوان تم وضعه فوق الصندوق وفي أقصى اليمين -->
-        <div class="card mt-2">
+        <h1 class="text-center mt-5">Insurance Cost Prediction</h1>
+        <div class="card mt-4">
             <div class="card-body">
                 <form id="predictionForm">
                     <div class="form-group">
