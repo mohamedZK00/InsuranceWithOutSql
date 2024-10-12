@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 from pycaret.regression import load_model, predict_model
 from fastapi import FastAPI
-#from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -50,9 +50,9 @@ class OutputModel(BaseModel):
     prediction: float
 
 # الدالة الرئيسية لإرجاع صفحة HTML
-#@app.get("/", response_class=HTMLResponse)
-#def read_root():
-#    return FileResponse("index.html")
+@app.get("/", response_class=HTMLResponse)
+def read_root():
+    return FileResponse("index.html")
 
 # دالة التنبؤ
 @app.post("/predict", response_model=OutputModel)
