@@ -1,58 +1,80 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <title>Insurance Cost Prediction</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <style>
-        body {
-            background-image: url('https://raw.githubusercontent.com/mohamedZKOO/InsuranceWithOutsql/main/IMG-20241013-WA0002.jpg');
-            background-size: cover;
-            background-position: center;
-            color: #fff;
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
 
+        /* Full-page background */
+        body {
+            background-image: url('https://raw.githubusercontent.com/mohamedZKOO/InsuranceWithOutsql/main/IMG-20241013-WA0002.jpg'); /* استخدمنا الرابط من الكود الأول */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Custom box for prediction form matching the background */
         .card {
-            border-radius: 10px;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.8); /* لون الخلفية مع شفافية */
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            background-color: rgba(190, 204, 204, 0.708); /* خلفية بيضاء شبه شفافة */
-            width: 33%; /* جعل عرض البطاقة ثلث عرض الحاوية */
-            margin: auto; /* مركز البطاقة */
+            padding: 20px;
+            margin-top: 100px; /* مسافة من الأعلى */
+            max-width: 500px; /* تحديد عرض البطاقة */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         h1 {
-            color: #131212;
-            font-size: 2.5rem; /* حجم أكبر للعنوان */
-        }
-
-        h3 {
-            color: #023530;
-        }
-
-        label {
-            color: #333; /* لون داكن للنصوص */
-        }
-
-        .form-control {
-            width: 100%; /* جعل عرض صناديق الإدخال 100% من البطاقة */
-            height: 38px; /* تقليل ارتفاع صناديق الإدخال */
-            font-size: 0.9rem; /* تقليل حجم الخط */
-            margin: auto; /* مركز الصناديق */
+            color: #333; /* لون النص */
         }
 
         .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
+            background-color: #ff5722; /* لون الزر */
+            border: none;
         }
 
         .btn-primary:hover {
-            background-color: #0056b3; /* لون أغمق عند المرور بالفأرة */
+            background-color: #e64a19; /* لون أغمق عند المرور */
         }
+
+        .rocket {
+            font-size: 50px;
+            color: #ffcc00; /* لون الصواريخ */
+            animation: rocket-animation 1s infinite;
+        }
+
+        @keyframes rocket-animation {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        #result {
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* ملء الشاشة */
+        }
+
     </style>
 
 </head>
@@ -60,78 +82,61 @@
 <body>
 
     <div class="container">
+        <div class="card p-4">
+            <h1 class="text-center mb-4">Insurance Cost Prediction</h1>
 
-        <h1 class="text-center mt-5">Insurance Cost Prediction</h1>
-
-        <div class="card mt-4">
-
-            <div class="card-body">
-
-                <form id="predictionForm">
-
-                    <div class="form-group">
-                        <label for="age">Age</label>
-                        <input type="number" class="form-control" id="age" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="sex">Sex</label>
-                        <select class="form-control" id="sex" required>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="bmi">BMI</label>
-                        <input type="number" step="0.1" class="form-control" id="bmi" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="children">Children</label>
-                        <input type="number" class="form-control" id="children" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="smoker">Smoker</label>
-                        <select class="form-control" id="smoker" required>
-                            <option value="no">No</option>
-                            <option value="yes">Yes</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="region">Region</label>
-                        <select class="form-control" id="region" required>
-                            <option value="northeast">Northeast</option>
-                            <option value="northwest">Northwest</option>
-                            <option value="southeast">Southeast</option>
-                            <option value="southwest">Southwest</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-block">Calculate Cost</button>
-
-                </form>
-
-                <div id="result" class="mt-4" style="display:none;">
-                    <h3>Expected Cost: $<span id="predictionValue"></span></h3>
+            <form id="predictionForm">
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" class="form-control" id="age" required>
                 </div>
+                <div class="form-group">
+                    <label for="sex">Sex</label>
+                    <select class="form-control" id="sex" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bmi">BMI</label>
+                    <input type="number" step="0.1" class="form-control" id="bmi" required>
+                </div>
+                <div class="form-group">
+                    <label for="children">Children</label>
+                    <input type="number" class="form-control" id="children" required>
+                </div>
+                <div class="form-group">
+                    <label for="smoker">Smoker</label>
+                    <select class="form-control" id="smoker" required>
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="region">Region</label>
+                    <select class="form-control" id="region" required>
+                        <option value="northeast">Northeast</option>
+                        <option value="northwest">Northwest</option>
+                        <option value="southeast">Southeast</option>
+                        <option value="southwest">Southwest</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Calculate Cost</button>
+            </form>
 
+            <div id="result" class="mt-4" style="display:none;">
+                <h3>Expected Cost: $<span id="predictionValue"></span></h3>
             </div>
 
         </div>
-
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <script>
         document.getElementById('predictionForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            
+
             const age = document.getElementById('age').value;
             const sex = document.getElementById('sex').value;
             const bmi = document.getElementById('bmi').value;
