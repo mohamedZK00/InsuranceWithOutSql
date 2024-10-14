@@ -1,174 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <title>Insurance Cost Prediction</title>
-
     <style>
-
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Full-page background */
         body {
-            background-image: url('https://raw.githubusercontent.com/mohamedZKOO/InsuranceWithOutsql/main/IMG-20241013-WA0002.jpg'); /* استخدمنا الرابط من الكود الأول */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://arab-forum.org/wp-content/uploads/2024/07/top-view-business-items-with-growth-chart-medical-masks-1024x683.jpg'); /* هنا ضع رابط الصورة */
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-
-        /* Custom box for prediction form matching the background */
-        .card {
-            border-radius: 15px;
-            background-color: rgba(255, 255, 255, 0.8); /* لون الخلفية مع شفافية */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            margin-top: 100px; /* مسافة من الأعلى */
-            max-width: 500px; /* تحديد عرض البطاقة */
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        h1 {
-            color: #333; /* لون النص */
-        }
-
-        .btn-primary {
-            background-color: #ff5722; /* لون الزر */
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #e64a19; /* لون أغمق عند المرور */
-        }
-
-        .rocket {
-            font-size: 50px;
-            color: #ffcc00; /* لون الصواريخ */
-            animation: rocket-animation 1s infinite;
-        }
-
-        @keyframes rocket-animation {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
-        }
-
-        #result {
-            transition: all 0.3s ease;
-        }
-
-        .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* ملء الشاشة */
+            height: 100vh;
         }
-
+        .container {
+            background-color: rgba(255, 255, 255, 0.616); /* لإضافة شفافية للخلفية البيضاء */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 24px;
+            color: #08535b;
+        }
     </style>
-
 </head>
-
 <body>
 
     <div class="container">
-        <div class="card p-4">
-            <h1 class="text-center mb-4">Insurance Cost Prediction</h1>
-
-            <form id="predictionForm">
-                <div class="form-group">
-                    <label for="age">Age</label>
-                    <input type="number" class="form-control" id="age" required>
-                </div>
-                <div class="form-group">
-                    <label for="sex">Sex</label>
-                    <select class="form-control" id="sex" required>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="bmi">BMI</label>
-                    <input type="number" step="0.1" class="form-control" id="bmi" required>
-                </div>
-                <div class="form-group">
-                    <label for="children">Children</label>
-                    <input type="number" class="form-control" id="children" required>
-                </div>
-                <div class="form-group">
-                    <label for="smoker">Smoker</label>
-                    <select class="form-control" id="smoker" required>
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="region">Region</label>
-                    <select class="form-control" id="region" required>
-                        <option value="northeast">Northeast</option>
-                        <option value="northwest">Northwest</option>
-                        <option value="southeast">Southeast</option>
-                        <option value="southwest">Southwest</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Calculate Cost</button>
-            </form>
-
-            <div id="result" class="mt-4" style="display:none;">
-                <h3>Expected Cost: $<span id="predictionValue"></span></h3>
+        <h1>Insurance Cost Prediction</h1>
+        <form id="predictionForm">
+            <div class="input-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" required>
             </div>
-
-        </div>
+            <div class="input-group">
+                <label for="sex">Sex</label>
+                <select id="sex" name="sex" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="bmi">BMI</label>
+                <input type="number" step="0.1" id="bmi" name="bmi" required>
+            </div>
+            <div class="input-group">
+                <label for="children">Children</label>
+                <input type="number" id="children" name="children" required>
+            </div>
+            <div class="input-group">
+                <label for="smoker">Smoker</label>
+                <select id="smoker" name="smoker" required>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="region">Region</label>
+                <select id="region" name="region" required>
+                    <option value="northeast">Northeast</option>
+                    <option value="northwest">Northwest</option>
+                    <option value="southeast">Southeast</option>
+                    <option value="southwest">Southwest</option>
+                </select>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+        <div class="result" id="result"></div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
     <script>
-        document.getElementById('predictionForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const age = document.getElementById('age').value;
-            const sex = document.getElementById('sex').value;
-            const bmi = document.getElementById('bmi').value;
-            const children = document.getElementById('children').value;
-            const smoker = document.getElementById('smoker').value;
-            const region = document.getElementById('region').value;
-
-            fetch('https://insurancewithoutsql-production.up.railway.app/predict', {
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = {
+                age: document.getElementById('age').value,
+                sex: document.getElementById('sex').value,
+                bmi: document.getElementById('bmi').value,
+                children: document.getElementById('children').value,
+                smoker: document.getElementById('smoker').value,
+                region: document.getElementById('region').value
+            };
+            const response = await fetch('https://insurancewithoutsql-production.up.railway.app/predict', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    age: parseInt(age),
-                    sex: sex,
-                    bmi: parseFloat(bmi),
-                    children: parseInt(children),
-                    smoker: smoker,
-                    region: region
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('predictionValue').textContent = data.prediction.toFixed(2);
-                document.getElementById('result').style.display = 'block';
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
             });
+            const result = await response.json();
+            document.getElementById('result').innerText = `Expected Cost:  $${result.prediction}`;
         });
     </script>
 
 </body>
-
 </html>
